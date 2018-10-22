@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import BookList from './components/main/BookList';
 import Search from './components/search/Search';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class BookContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showSearchPage: false
-    };
+    this.state = {};
   }
   render() {
     return (
-      <div className="app">
-        {this.state.showSearchPage ? <Search /> : <BookList />}
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact={true} path="/" render={() => <BookList />} />
+          <Route exact={true} path="/search" render={() => <Search />} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }

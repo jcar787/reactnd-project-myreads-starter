@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default props => {
   return (
@@ -246,9 +247,7 @@ export default props => {
         </div>
       </div>
       <div className="open-search">
-        <a onClick={() => this.setState({ showSearchPage: true })}>
-          Add a book
-        </a>
+        <Link to="/search">Search</Link>
       </div>
     </div>
   );
