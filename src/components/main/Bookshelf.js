@@ -1,7 +1,8 @@
 import React from 'react';
 import BookCard from './BookCard';
+import PropTypes from 'prop-types';
 
-export default props => {
+const Bookshelf = props => {
   const { title, books } = props;
   return (
     <div className="bookshelf">
@@ -17,3 +18,10 @@ export default props => {
     </div>
   );
 };
+
+Bookshelf.propTypes = {
+  title: PropTypes.string.isRequired,
+  books: PropTypes.array.isRequired
+};
+
+export default Bookshelf;
