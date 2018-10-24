@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const BookshelfChanger = props => {
   const { moveBookToNewShelf, id, shelfId } = props;
-  console.log(shelfId);
+
   return (
     <div className="book-shelf-changer">
       <select

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Bookshelf = props => {
   const { id: shelfId, shelfTitle, books, moveBookToNewShelf } = props;
-  console.log(props);
+
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{shelfTitle}</h2>
