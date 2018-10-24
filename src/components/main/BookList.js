@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Bookshelf from './Bookshelf';
 
 const BookList = props => {
-  const { current, want, read } = props;
+  const { currentlyReading, wantToRead, read, moveBookToNewShelf } = props;
+
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -12,9 +13,24 @@ const BookList = props => {
       </div>
       <div className="list-books-content">
         <div>
-          <Bookshelf title="Currently Reading" books={current} />
-          <Bookshelf title="Want to Read" books={want} />
-          <Bookshelf title="Read" books={read} />
+          <Bookshelf
+            shelfTitle="Currently Reading"
+            books={currentlyReading}
+            id={'currentlyReading'}
+            moveBookToNewShelf={moveBookToNewShelf}
+          />
+          <Bookshelf
+            shelfTitle="Want to Read"
+            books={wantToRead}
+            id={'wantToRead'}
+            moveBookToNewShelf={moveBookToNewShelf}
+          />
+          <Bookshelf
+            shelfTitle="Read"
+            books={read}
+            id={'read'}
+            moveBookToNewShelf={moveBookToNewShelf}
+          />
         </div>
       </div>
       <div className="open-search">
@@ -25,8 +41,9 @@ const BookList = props => {
 };
 
 BookList.propTypes = {
-  current: PropTypes.array.isRequired,
-  want: PropTypes.array.isRequired,
-  read: PropTypes.array.isRequired
+  currentlyReading: PropTypes.array.isRequired,
+  wantToRead: PropTypes.array.isRequired,
+  read: PropTypes.array.isRequired,
+  moveBookToNewShelf: PropTypes.func.isRequired
 };
 export default BookList;

@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
-import uuid from 'uuid/v4';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import BookList from './components/main/BookList';
 import Search from './components/search/Search';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { getAll } from './utils/BooksAPI';
 
 class BookContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: [],
-      want: [],
+      currentlyReading: [],
+      wantToRead: [],
       read: []
     };
   }
   componentDidMount() {
-    this.setState({
-      current: [
+    getAll().then(data => {
+      console.log(data);
+      this.setState({
+        currentlyReading: data.filter(
+          book => book.shelf === 'currentlyReading'
+        ),
+        wantToRead: data.filter(book => book.shelf === 'wantToRead'),
+        read: data.filter(book => book.shelf === 'read')
+      });
+    });
+    /*this.setState({
+      currentlyReading: [
         {
           id: uuid(),
           name: 'To Kill a Mocking Bird',
@@ -31,7 +41,7 @@ class BookContainer extends Component {
             'http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api'
         }
       ],
-      want: [
+      wantToRead: [
         {
           id: uuid(),
           name: '1776',
@@ -70,10 +80,24 @@ class BookContainer extends Component {
             'http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api'
         }
       ]
-    });
+    });*/
   }
+
+  moveBookToNewShelf = (e, prevShelf, id) => {
+    const found = this.state[prevShelf].find(book => book.id === id);
+    const newShelf = e.target.value;
+    if (newShelf !== 'none') {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          [prevShelf]: prevState[prevShelf].filter(book => book.id !== id),
+          [newShelf]: [...prevState[newShelf], found]
+        };
+      });
+    }
+  };
   render() {
-    const { current, want, read } = this.state;
+    const { currentlyReading, wantToRead, read } = this.state;
     return (
       <BrowserRouter>
         <Switch>
@@ -81,7 +105,12 @@ class BookContainer extends Component {
             exact={true}
             path="/"
             render={() => (
-              <BookList current={current} want={want} read={read} />
+              <BookList
+                currentlyReading={currentlyReading}
+                wantToRead={wantToRead}
+                read={read}
+                moveBookToNewShelf={this.moveBookToNewShelf}
+              />
             )}
           />
           <Route exact={true} path="/search" render={() => <Search />} />

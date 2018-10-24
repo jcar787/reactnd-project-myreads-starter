@@ -3,15 +3,31 @@ import BookCard from './BookCard';
 import PropTypes from 'prop-types';
 
 const Bookshelf = props => {
-  const { title, books } = props;
+  const { id: shelfId, shelfTitle, books, moveBookToNewShelf } = props;
+  console.log(props);
   return (
     <div className="bookshelf">
-      <h2 className="bookshelf-title">{title}</h2>
+      <h2 className="bookshelf-title">{shelfTitle}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map(book => {
-            const { id, name, author, url } = book;
-            return <BookCard key={id} name={name} author={author} url={url} />;
+            const {
+              id,
+              title,
+              authors,
+              imageLinks: { smallThumbnail }
+            } = book;
+            return (
+              <BookCard
+                key={id}
+                id={id}
+                shelfId={shelfId}
+                title={title}
+                authors={authors}
+                smallThumbnail={smallThumbnail}
+                moveBookToNewShelf={moveBookToNewShelf}
+              />
+            );
           })}
         </ol>
       </div>
@@ -20,8 +36,9 @@ const Bookshelf = props => {
 };
 
 Bookshelf.propTypes = {
-  title: PropTypes.string.isRequired,
-  books: PropTypes.array.isRequired
+  shelfTitle: PropTypes.string.isRequired,
+  books: PropTypes.array.isRequired,
+  moveBookToNewShelf: PropTypes.func.isRequired
 };
 
 export default Bookshelf;
