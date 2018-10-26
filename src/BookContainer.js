@@ -82,18 +82,28 @@ class BookContainer extends Component {
       })
     ).then(() => {
       search(value).then(res => {
-        console.log(res);
-        res = res.map(book =>
-          this.doesBookBelongsToAShelf(book, 'currentlyReading')
-        );
-        res = res.map(book => this.doesBookBelongsToAShelf(book, 'wantToRead'));
-        res = res.map(book => this.doesBookBelongsToAShelf(book, 'read'));
-        this.setState(prevState => {
-          return {
-            ...prevState,
-            searchResults: res
-          };
-        });
+        if (res && !res.error) {
+          res = res.map(book =>
+            this.doesBookBelongsToAShelf(book, 'currentlyReading')
+          );
+          res = res.map(book =>
+            this.doesBookBelongsToAShelf(book, 'wantToRead')
+          );
+          res = res.map(book => this.doesBookBelongsToAShelf(book, 'read'));
+          this.setState(prevState => {
+            return {
+              ...prevState,
+              searchResults: res
+            };
+          });
+        } else {
+          this.setState(prevState => {
+            return {
+              ...prevState,
+              searchResults: []
+            };
+          });
+        }
       });
     });
   };

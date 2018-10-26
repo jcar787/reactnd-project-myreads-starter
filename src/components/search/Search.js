@@ -12,14 +12,6 @@ const Search = props => {
           Close
         </Link>
         <div className="search-books-input-wrapper">
-          {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
           <input
             value={search}
             type="text"
@@ -30,28 +22,34 @@ const Search = props => {
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid">
-          {books.map(book => {
-            console.log(book);
-            const {
-              id,
-              title,
-              authors,
-              imageLinks: { smallThumbnail }
-            } = book;
-            return (
-              <BookCard
-                key={id}
-                id={id}
-                shelfId={book.shelf || shelfId}
-                title={title}
-                authors={authors}
-                smallThumbnail={smallThumbnail}
-                moveBookToNewShelf={moveBookToNewShelf}
-              />
-            );
-          })}
-        </ol>
+        {search && books && books.length > 0 ? (
+          <ol className="books-grid">
+            {books.map(book => {
+              console.log(book);
+              const {
+                id,
+                title,
+                authors,
+                imageLinks: { smallThumbnail }
+              } = book;
+              return (
+                <BookCard
+                  key={id}
+                  id={id}
+                  shelfId={book.shelf || shelfId}
+                  title={title}
+                  authors={authors}
+                  smallThumbnail={smallThumbnail}
+                  moveBookToNewShelf={moveBookToNewShelf}
+                />
+              );
+            })}
+          </ol>
+        ) : search !== '' && books.length === 0 ? (
+          <h3>No Books Found</h3>
+        ) : (
+          <h3>Search for a Book</h3>
+        )}
       </div>
     </div>
   );
