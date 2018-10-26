@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import BookCard from '../main/BookCard';
 
-export default props => {
+const Search = props => {
+  const { books, search, onChange, shelfId, moveBookToNewShelf } = props;
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -17,12 +20,46 @@ export default props => {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-          <input type="text" placeholder="Search by title or author" />
+          <input
+            value={search}
+            type="text"
+            id="search"
+            placeholder="Search by title or author"
+            onChange={e => onChange(e)}
+          />
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid" />
+        <ol className="books-grid">
+          {books.map(book => {
+            console.log(book);
+            const {
+              id,
+              title,
+              authors,
+              imageLinks: { smallThumbnail }
+            } = book;
+            return (
+              <BookCard
+                key={id}
+                id={id}
+                shelfId={book.shelf || shelfId}
+                title={title}
+                authors={authors}
+                smallThumbnail={smallThumbnail}
+                moveBookToNewShelf={moveBookToNewShelf}
+              />
+            );
+          })}
+        </ol>
       </div>
     </div>
   );
 };
+
+Search.propTypes = {
+  search: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+};
+
+export default Search;

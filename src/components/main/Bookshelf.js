@@ -21,7 +21,7 @@ const Bookshelf = props => {
               <BookCard
                 key={id}
                 id={id}
-                shelfId={shelfId}
+                shelfId={book.shelf || shelfId}
                 title={title}
                 authors={authors}
                 smallThumbnail={smallThumbnail}

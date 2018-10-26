@@ -21,7 +21,7 @@ const BookCard = props => {
           shelfId={shelfId}
         />
         <div className="book-title">{title}</div>
-        <div className="book-authors">{authors.join(', ')}</div>
+        <div className="book-authors">{authors ? authors.join(', ') : ''}</div>
       </div>
     </li>
   );
@@ -30,7 +30,7 @@ const BookCard = props => {
 BookCard.propTypes = {
   title: PropTypes.string.isRequired,
   smallThumbnail: PropTypes.string.isRequired,
-  authors: PropTypes.array.isRequired,
+  authors: PropTypes.array,
   id: PropTypes.string.isRequired,
   moveBookToNewShelf: PropTypes.func.isRequired
 };
