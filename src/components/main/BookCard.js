@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import BookHeader from './BookHeader';
 import PropTypes from 'prop-types';
 
@@ -15,12 +16,15 @@ const BookCard = props => {
     <li>
       <div className="book">
         <BookHeader
+          alt={title}
           smallThumbnail={smallThumbnail}
           moveBookToNewShelf={moveBookToNewShelf}
           id={id}
           shelfId={shelfId}
         />
-        <div className="book-title">{title}</div>
+        <Link to={`/book/${id}`}>
+          <div className="book-title">{title}</div>
+        </Link>
         <div className="book-authors">{authors ? authors.join(', ') : ''}</div>
       </div>
     </li>

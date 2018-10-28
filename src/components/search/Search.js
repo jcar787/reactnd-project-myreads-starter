@@ -25,13 +25,7 @@ const Search = props => {
         {search && books && books.length > 0 ? (
           <ol className="books-grid">
             {books.map(book => {
-              console.log(book);
-              const {
-                id,
-                title,
-                authors,
-                imageLinks: { smallThumbnail }
-              } = book;
+              const { id, title, authors } = book;
               return (
                 <BookCard
                   key={id}
@@ -39,7 +33,12 @@ const Search = props => {
                   shelfId={book.shelf || shelfId}
                   title={title}
                   authors={authors}
-                  smallThumbnail={smallThumbnail}
+                  smallThumbnail={
+                    (book &&
+                      book.imageLinks &&
+                      book.imageLinks.smallThumbnail) ||
+                    ''
+                  }
                   moveBookToNewShelf={moveBookToNewShelf}
                 />
               );

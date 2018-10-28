@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import BookList from './components/main/BookList';
 import BookDetail from './components/main/BookDetail';
 import Search from './components/search/Search';
+import NotFound from './components/notfound/NotFound';
 import { get, getAll, search, update } from './utils/BooksAPI';
 
 class BookContainer extends Component {
@@ -53,6 +54,7 @@ class BookContainer extends Component {
       const found = this.state[prevShelf].find(book => book.id === id);
       if (newShelf !== 'none' && found) {
         update(found, newShelf).then(() => {
+          found.shelf = newShelf;
           this.setState(prevState => {
             return {
               ...prevState,
@@ -146,6 +148,7 @@ class BookContainer extends Component {
             )}
           />
           <Route exact={true} path="/book/:id" component={BookDetail} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </BrowserRouter>
     );

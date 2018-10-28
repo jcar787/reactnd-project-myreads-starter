@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import BookCard from './BookCard';
 import PropTypes from 'prop-types';
 
@@ -12,24 +11,20 @@ const Bookshelf = props => {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map(book => {
-            const {
-              id,
-              title,
-              authors,
-              imageLinks: { smallThumbnail }
-            } = book;
+            const { id, title, authors } = book;
             return (
-              <Link to={`/book/${id}`} book={book}>
-                <BookCard
-                  key={id}
-                  id={id}
-                  shelfId={book.shelf || shelfId}
-                  title={title}
-                  authors={authors}
-                  smallThumbnail={smallThumbnail}
-                  moveBookToNewShelf={moveBookToNewShelf}
-                />
-              </Link>
+              <BookCard
+                key={id}
+                id={id}
+                shelfId={book.shelf || shelfId}
+                title={title}
+                authors={authors}
+                smallThumbnail={
+                  (book && book.imageLinks && book.imageLinks.smallThumbnail) ||
+                  ''
+                }
+                moveBookToNewShelf={moveBookToNewShelf}
+              />
             );
           })}
         </ol>
