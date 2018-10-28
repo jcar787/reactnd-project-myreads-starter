@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import BookCard from './BookCard';
 import PropTypes from 'prop-types';
 
@@ -18,15 +19,17 @@ const Bookshelf = props => {
               imageLinks: { smallThumbnail }
             } = book;
             return (
-              <BookCard
-                key={id}
-                id={id}
-                shelfId={book.shelf || shelfId}
-                title={title}
-                authors={authors}
-                smallThumbnail={smallThumbnail}
-                moveBookToNewShelf={moveBookToNewShelf}
-              />
+              <Link to={`/book/${id}`} book={book}>
+                <BookCard
+                  key={id}
+                  id={id}
+                  shelfId={book.shelf || shelfId}
+                  title={title}
+                  authors={authors}
+                  smallThumbnail={smallThumbnail}
+                  moveBookToNewShelf={moveBookToNewShelf}
+                />
+              </Link>
             );
           })}
         </ol>

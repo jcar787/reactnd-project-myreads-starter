@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import BookList from './components/main/BookList';
+import BookDetail from './components/main/BookDetail';
 import Search from './components/search/Search';
 import { get, getAll, search, update } from './utils/BooksAPI';
 
@@ -144,6 +145,7 @@ class BookContainer extends Component {
               />
             )}
           />
+          <Route exact={true} path="/book/:id" component={BookDetail} />
         </Switch>
       </BrowserRouter>
     );

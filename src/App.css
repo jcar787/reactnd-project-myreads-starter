@@ -172,3 +172,21 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+.book-detail {
+  width: 50%;
+  margin: auto;
+}
+
+.book-detail img, .book-detail h3 {
+  margin-left: 5%;
+}
+
+.book-detail ul li {
+  list-style: none;
+  margin-top: 15px;
+}
+
+.boldSubtitle {
+  font-weight: 700;
+}
